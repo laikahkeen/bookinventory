@@ -3,6 +3,7 @@ from django_filters import rest_framework as filters
 from .models import Book
 from .serializers import BookSerializer,PartialUpdateBookSerializer
 from .pagination import CustomPageNumberPagination  
+from .permissions import IsAuthorOrReadOnly
 
 class BookFilter(filters.FilterSet):
     genre = filters.CharFilter(field_name='genre', lookup_expr='iexact')
@@ -16,6 +17,7 @@ class BookListCreate(generics.ListCreateAPIView):
     serializer_class = BookSerializer
     filterset_class = BookFilter
     pagination_class = CustomPageNumberPagination  
+    permission_classes = [IsAuthorOrReadOnly]
 
 class BookDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
@@ -24,3 +26,4 @@ class BookDetail(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method in ['PUT', 'PATCH']:
             return PartialUpdateBookSerializer
         return BookSerializer
+    permission_classes = [IsAuthorOrReadOnly]
