@@ -5,7 +5,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <p>Hi {{ user.username }}!</p>
-<p><a href="{% url 'book-list' %}">Go to Book list</a></p>
+<p><a href="{% url 'book-list' %}">Go to Book API</a></p>
 <p><a href="{% url 'password_change' %}">Password Change</a></p>
 <form action="{% url 'logout' %}" method="post">
   {% csrf_token %}
@@ -13,7 +13,8 @@
 </form>
 {% else %}
 <p>You are not logged in</p>
-<p><a href="{% url 'password_reset' %}">Password Reset</a></p>
+<p><a href="{% url 'signup' %}">Sign up</a></p>
 <p><a href="{% url 'login' %}">Log In</a></p>
+<p><a href="{% url 'password_reset' %}">Password Reset</a></p>
 {% endif %}
 {% endblock %}
